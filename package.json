@@ -1,0 +1,20 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Everythinga about frontend at one place",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayush-code-drops/frontend.git"
+  },
+  "author": "Ayush Agrawal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayush-code-drops/frontend/issues"
+  },
+  "homepage": "https://github.com/ayush-code-drops/frontend#readme"
+}
