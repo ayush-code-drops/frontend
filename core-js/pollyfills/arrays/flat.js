@@ -1,35 +1,16 @@
-// Array.prototype.flatPolyfillRecursive = function (depth = 1) {
-//   console.log("Flattening the array using recursive approach.");
+const flat = (arr, depth) => {
+  let flattenedArr = [];
 
-//   const result = [];
-
-//   this.forEach((item) => {
-//     if (Array.isArray(item) && depth > 0) {
-//       result.push(...item.flatPolyfillRecursive(depth - 1));
-//     } else {
-//       result.push(item);
-//     }
-//   });
-
-//   return result;
-// };
-
-const myFlat = function (arr, depth = 1) {
-  let output = [];
-  for (let i = 0; i < arr.length; i++) {
-    if (Array.isArray(arr[i]) && depth > 0) {
-      output.push(...myFlat(arr[i], depth - 1));
-    } else {
-      output.push(arr[i]);
+  function helper(arr, currentDepth) {
+    for (val of arr) {
+      if (Array.isArray(val) && currentDepth < depth) {
+        helper(val, currentDepth + 1);
+      } else {
+        flattenedArr.push(val);
+      }
     }
+    return flattenedArr;
   }
-  return output;
+
+  return helper(arr, 0);
 };
-
-const arr = [1, 2, [1, 2, 3, 1, 2], 4, [5, 6, [7]]];
-
-// const flattenedArr = arr.flatPolyfillRecursive(1);
-
-// console.log(flattenedArr);
-
-console.log(myFlat(arr, 2));

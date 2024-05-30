@@ -112,3 +112,29 @@ const sumFn = (a, b, c) => a + b + c;
 const sumCurried = makeCurriedFn(sumFn);
 
 console.log(sumCurried(4)(5)(6), sumFn.length);
+
+///Question (Viacom 18)
+
+//const res = currySum(1,2)(3,4,5)(6,7)(8,9,10)()
+//we need 1+2-3+4-5+6-7+8-9+10
+
+function currySum(...args1) {
+  return function (...args2) {
+    if (args2.length > 0) {
+     
+      return currySum(...args1,...args2);
+    }
+    return args1.reduce((acc, curr,i) => {
+      if(i===0) return acc+=curr
+return i%2===1? acc+=curr:acc-=curr
+    }, 0);
+  };
+}
+
+const s = currySum(1,2)(3,4,5)(6,7)(8,9,10)()
+console.log('currySum',s)
+
+
+
+
+
