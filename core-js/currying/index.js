@@ -22,6 +22,8 @@ console.log("ans", ans);
 
 // Q2 :- Currying function that takes an operation and returns accordingly
 
+
+
 const curryingFn = function (operation) {
   return function (a) {
     return function (b) {
@@ -46,6 +48,16 @@ const curryingFn = function (operation) {
 const divide = curryingFn("divide")(6)(3);
 
 console.log("divideAns", divide);
+
+const sum = function (a) {
+  return function (b) {
+    if (b) {
+      return sum(a + b);
+    } else {
+      return a;
+    }
+  };
+};
 
 // Q3:- Infinite CurryingSum :- fn(a,b,c...,n) => fn(a)(b)(c)...(n)
 
