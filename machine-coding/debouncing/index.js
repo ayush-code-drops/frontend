@@ -7,11 +7,10 @@ const handleInputChange = (e) => {
 const debouncedFn = function (fn, delay) {
   let timer;
   return function (...args) {
-    if (timer) clearTimeout(timer);
+    if (timer) clearTimeout(timer); // Can do without checking for timer as well, since clearInterval does nothing if incase timer doesn't exist
 
-    timer = setTimeout(function () {
-      console.log("this", this);
-      fn(...args);
+    timer = setTimeout(() => {
+      fn.apply(this, args);
     }, delay);
   };
 };

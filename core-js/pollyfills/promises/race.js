@@ -42,3 +42,54 @@ race(promiseArr)
     console.log(res);
   })
   .catch((e) => console.log(e));
+
+
+
+  const flattenObj = (obj, prefix) => {
+    let output = {};
+
+    for (let key in obj) {
+      let val = obj[key];
+      let newKey = prefix === "" ? key : prefix + "." + key;
+      if (val !== null && typeof val === "object") {
+        let recursiveCall = flattenObj(val, newKey);
+        output = { ...output, ...recursiveCall };
+      } else {
+        output[newKey] = val;
+      }
+    }
+
+    return output;
+  };
+
+  const flattenArr = (arr, depth) => {
+    let res = [];
+
+    function helper(arr, currentDepth) {
+      for (let val of arr) {
+        if (Array.isArray(val) && currentDepth < depth) {
+          helper(val, currentDepth + 1);
+        } else {
+          res.push(val);
+        }
+      }
+      return res;
+    }
+
+    return helper(arr, depth);
+  };
+
+  const infiteCurryingsSum = function (a) {
+    return function (b) {
+      if (b) {
+        return infiteCurryingsSum(a + b);
+      } else {
+        return a;
+      }
+    };
+  };
+
+  const curriedfn = function (fn) {
+    return function (...args) {};
+  };
+
