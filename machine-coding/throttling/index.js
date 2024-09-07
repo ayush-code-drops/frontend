@@ -2,7 +2,19 @@ const handleScroll = () => {
   console.log(window.scrollY);
 };
 
-const throttler = function (fn, delay) {
+const throttler1 = (fn, delay) => {
+  let timerFlag = null;
+  return function (...args) {
+    if (timerFlag === null) {
+      fn.apply(this, args);
+      setTimeout(() => {
+        timerFlag = null;
+      }, delay);
+    }
+  };
+};
+
+const throttler2 = function (fn, delay) {
   let lastCall = 0;
   return function (...args) {
     const now = new Date().getTime();
@@ -15,6 +27,6 @@ const throttler = function (fn, delay) {
   };
 };
 
-const throttledFn = throttler(handleScroll, 1000);
+const throttledFn = throttler1(handleScroll, 1000);
 
-window.addEventListener("scroll", throttledFn);
+// window.addEventListener("scroll", throttledFn);
