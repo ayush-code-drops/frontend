@@ -61,6 +61,18 @@ const sum = function (a) {
 
 // Q3:- Infinite CurryingSum :- fn(a,b,c...,n) => fn(a)(b)(c)...(n)
 
+const myCurry = (fn) => {
+  return function curriedFn(...args) {
+    if (args.length >= func.length) {
+      return fn(...args);
+    } else {
+      return function (...next) {
+        return curriedFn(...args, ...next);
+      };
+    }
+  };
+};
+
 function infiniteCurryingSum(a) {
   return function (b) {
     if (b) {

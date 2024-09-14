@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+#container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    height: 800px;
+    overflow-y: scroll;
+}
+
+#square{
+    height: 200px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#btn{
+    position: fixed;
+    bottom: 10px;
+    right: 200px;
+    background-color: teal;
+    color: white;
+    outline: none;
+    padding: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Gallery </h1>
+        <div id="grid"></div>
+        <button style="display: none;" id="btn"> Go to Top</button>
+    </div>
+    <script>
+        let i = 0
+        let btn = document.getElementById("btn")
+        let grid = document.getElementById("grid")
+
+        btn.onclick = () =>{
+            window.scrollTo(0,0)
+        }
+const loadItems = () =>{
+    let gridEle = document.getElementById("grid")
+    for(let j=0;j<15;j++){
+        let sqr = document.createElement('div')
+        sqr.id = "square"
+        sqr.style.backgroundColor = getRandomColor()
+        sqr.style.color = "black"
+        sqr.innerText = `BLOCK: ${i}`
+
+        gridEle.appendChild(sqr)
+        i++
+    }
+}
+
+function getRandomColor() {
+  // Generate a random number between 0 and 16777215 (decimal equivalent of #FFFFFF)
+  const randomNumber = Math.floor(Math.random() * 16777216);
+  // Convert the number to a hexadecimal string and pad with leading zeros if needed
+  const hexColor = `#${randomNumber.toString(16).padStart(6, '0')}`;
+  return hexColor;
+}
+
+loadItems()
+
+// window.addEventListener("scroll",()=>{
+//     if(window.scrollY < 100){
+//         document.getElementById("btn").style.display = "none"
+// }
+//     else if(document.getElementById("btn").style.display === "none"){
+//         document.getElementById("btn").style.display = "block"
+//     }
+   
+//     if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight) {
+//         console.log("...loading")
+//         loadItems()
+//     }
+// })
+
+grid.addEventListener("scroll",()=>{
+    if(grid.clientHeight + grid.scrollTop >= grid.scrollHeight) loadItems()
+})
+    </script>       
+</body>
+</html>

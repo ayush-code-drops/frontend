@@ -1,7 +1,7 @@
 let promise1 = new Promise((resolve, reject) => {
   setTimeout(() => {
-    reject("rejected 1");
-  }, 1000);
+    rejects("rejected 1");
+  }, 1200);
 });
 
 let promise2 = new Promise((resolve, reject) => {
@@ -23,20 +23,22 @@ let promise4 = new Promise((resolve, reject) => {
 });
 
 const promiseArr = [promise1, promise2, promise3, promise4];
-const any = (promises) => {
-  const result = [];
-  return new Promise(async (resolve, reject) => {
-    for (let i = 0; i < promises.length; i++) {
-      try {
-        let res = await promises[i];
-        resolve(res);
-      } catch (e) {
-        result.push(e);
-      }
-    }
-    reject(result);
+
+function any(promiseArr) {
+  let rejected = 0;
+  return new Promise((resolve, reject) => {
+    promiseArr.forEach((promise) => {
+      promise
+        .then((res) => resolve(res))
+        .catch(() => {
+          rejected++;
+          if (rejected === promiseArr.length) {
+            reject("AggregateError: No Promise in Promise.any was resolved");
+          }
+        });
+    });
   });
-};
+}
 
 any(promiseArr)
   .then((res) => console.log(res))

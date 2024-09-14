@@ -7,7 +7,7 @@ const throttler1 = (fn, delay) => {
   return function (...args) {
     if (timerFlag === null) {
       fn.apply(this, args);
-      setTimeout(() => {
+      timerFlag = setTimeout(() => {
         timerFlag = null;
       }, delay);
     }
@@ -28,5 +28,19 @@ const throttler2 = function (fn, delay) {
 };
 
 const throttledFn = throttler1(handleScroll, 1000);
-
 // window.addEventListener("scroll", throttledFn);
+
+const debouncer = (fn, delay) => {
+  let timer;
+  let firstCall = true;
+  return function (...args) {
+    if (firstCall) {
+      fn(...args);
+      firstCall = false;
+    }
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn(...args);
+    }, delay);
+  };
+};
