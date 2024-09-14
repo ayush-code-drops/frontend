@@ -7,7 +7,7 @@ const throttler1 = (fn, delay) => {
   return function (...args) {
     if (timerFlag === null) {
       fn.apply(this, args);
-      setTimeout(() => {
+      timerFlag = setTimeout(() => {
         timerFlag = null;
       }, delay);
     }
@@ -28,5 +28,18 @@ const throttler2 = function (fn, delay) {
 };
 
 const throttledFn = throttler1(handleScroll, 1000);
-
 // window.addEventListener("scroll", throttledFn);
+
+const getUniqueKey = (fn, args) => {
+  return `${fn.name}-${args}`;
+};
+
+const memoizeFn = (fn) => {
+  let cache = {};
+
+  return function (...args) {
+    const key = getUniqueKey(fn, args);
+    if (cache[key]) return cache[key];
+    else cache[key] = fn(args);
+  };
+};
